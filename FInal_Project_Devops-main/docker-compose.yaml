@@ -1,0 +1,22 @@
+version: '3'
+services:
+  tomcat:
+    image: tomcat:latest
+    ports:
+      - "8082:8080"
+    volumes:
+      - tomcat_webapps:/usr/local/tomcat/webapps
+      - ~/DevopsProject/GitHub/FInal_Project_Devops/TomCat/TomcatConfig/tomcat-users.xml:/usr/local/tomcat/conf/tomcat-users.xml
+      - ~/DevopsProject/GitHub/FInal_Project_Devops/TomCat/TomcatConfig/context.xml:/tmp/context.xml
+      - ~/DevopsProject/GitHub/FInal_Project_Devops/TomCat/TomcatConfig/TCconfigscript.sh:/tmp/TCconfigscript.sh
+    command: /bin/bash -c "/tmp/TCconfigscript.sh"
+  jenkins:
+    image: jenkins/jenkins:latest
+    ports:
+      - "8083:8080"
+    volumes:
+      - jenkins_home:/var/jenkins_home
+      - tomcat_webapps:/usr/local/tomcat/webapps
+volumes:
+  tomcat_webapps:
+  jenkins_home:
